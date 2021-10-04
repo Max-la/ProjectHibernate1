@@ -56,6 +56,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
             preparedStatement.execute();
             connection.commit();
+            preparedStatement.close();
         } catch (SQLException e) {
             try {
                 connection.rollback();
