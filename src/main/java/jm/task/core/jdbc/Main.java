@@ -5,15 +5,16 @@ import java.sql.SQLException;
 
 public class Main {
 	public static void main(String[] args) throws SQLException {
+		UserServiceImpl userService = new UserServiceImpl();
 
-		new UserServiceImpl().createUsersTable();
-		new UserServiceImpl().saveUser("Ivan", "WWW", (byte) 56);
-		new UserServiceImpl().saveUser("Stepan", "Petrov", (byte) 34);
-		new UserServiceImpl().saveUser("Igor", "Petrov", (byte) 44);
-        new UserServiceImpl().saveUser("Evgenyi", "Ivanov", (byte) 22);
-        new UserServiceImpl().removeUserById(2);
-		new UserServiceImpl().getAllUsers();
-		new UserServiceImpl().cleanUsersTable();
-		new UserServiceImpl().dropUsersTable();
+		userService.createUsersTable();
+		userService.saveUser("Ivan", "WWW", (byte) 56);
+		userService.saveUser("Stepan", "Petrov", (byte) 34);
+		userService.saveUser("Igor", "Petrov", (byte) 44);
+        userService.saveUser("Evgenyi", "Ivanov", (byte) 22);
+        userService.removeUserById(2);
+		userService.getAllUsers();
+		userService.cleanUsersTable();
+		userService.dropUsersTable();
 	}
 }
