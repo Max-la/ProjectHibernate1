@@ -15,7 +15,7 @@ public abstract class Util {
 	private static final String URL = "jdbc:mysql://localhost:3306/mydb?useSSL=false";
 	private static final String USERNAME = "Root12";
 	private static final String PASSWORD = "root";
-	private static SessionFactory sessionFactory;
+
 
 	public Connection getConnection() {
 		Connection connection = null;
@@ -28,32 +28,30 @@ public abstract class Util {
 		}
 		return connection;
 	}
-	public SessionFactory getSessionFactory(){
-		if (sessionFactory == null){
-			try {
-				Configuration configuration = new Configuration();
-				Properties setting = new Properties();
 
-				setting.put(Environment.DRIVER,"com.mysql.cj.jdbc.Driver");
-				setting.put(Environment.URL,URL);
-				setting.put(Environment.USER,USERNAME);
-				setting.put(Environment.PASS,PASSWORD);
-				setting.put(Environment.DIALECT,"org.hibernate.dialect.MySQLDialect");
+	public SessionFactory getSessionFactory() {
+		SessionFactory sessionFactory = null;
+		try {
+			Configuration configuration = new Configuration();
+			Properties setting = new Properties();
 
-				setting.put(Environment.SHOW_SQL,"true");
-				setting.put(Environment.CURRENT_SESSION_CONTEXT_CLASS,"thread");
+			setting.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+			setting.put(Environment.URL, URL);
+			setting.put(Environment.USER, USERNAME);
+			setting.put(Environment.PASS, PASSWORD);
+			setting.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+			setting.put(Environment.SHOW_SQL, "true");
+			setting.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
-				configuration.setProperties(setting);
-				configuration.addAnnotatedClass(User.class);
+			configuration.setProperties(setting);
+			configuration.addAnnotatedClass(User.class);
+			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+					.applySettings(configuration.getProperties()).build();
 
-				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-						.applySettings(configuration.getProperties()).build();
+			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
-				sessionFactory = configuration.buildSessionFactory();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return sessionFactory;
 	}
